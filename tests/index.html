@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>API</title>
+    </head>
+    <body>
+        <div class="buttons"></div>
+
+        <!-- <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script> -->
+        <script type="importmap">
+            {
+                "imports": {
+                    "freeshow-api": "../dist/index.js",
+                    "socket.io-client": "../node_modules/socket.io-client/dist/socket.io.esm.min.js"
+                }
+            }
+        </script>
+
+        <script type="module">
+            import api from "freeshow-api"
+
+            const API = api("http://localhost:5505")
+
+            function sendAction(action, data) {
+                API.webSocket(action, data)
+            }
+
+            // generate buttons
+            console.log("ACTIONS:", API.actions)
+            const parent = document.querySelector(".buttons")
+            Object.entries(API.actions).forEach(([action, value]) => {
+                let button = document.createElement("button")
+                button.innerText = action
+                if (value) button.style.backgroundColor = "red"
+                parent.appendChild(button)
+
+                // add listener
+                button.addEventListener("click", () => sendAction(action))
+            })
+        </script>
+    </body>
+</html>
