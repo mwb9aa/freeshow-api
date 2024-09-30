@@ -24,10 +24,11 @@ function sendHTTP(action: string, data: any = {}) {
 
     const query = `?action=${action}&data=${JSON.stringify(data)}`
 
-    fetch(URL + query, { method: "POST" }).catch(error)
+    fetch(URL + query, { method: "POST", signal: AbortSignal.timeout(100) }).catch(error)
 }
 
-function error() {
+function error(err: Error) {
+    if (err.name === "TimeoutError" || err.name === "AbortError") return
     console.error("Could not connect. Make sure WebSocket/REST is enabled in FreeShow settings>Connection!")
 }
 
