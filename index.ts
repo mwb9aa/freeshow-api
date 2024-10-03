@@ -16,6 +16,7 @@ function sendREST(action: string, data: any = {}) {
 
     const body = JSON.stringify({ action, ...data })
 
+    // fetch(URL, { method: "POST", body, headers: { "Content-type": "application/json; charset=UTF-8", "Access-Control-Allow-Origin": "*" }, cache: "reload", mode: "no-cors" }).catch(error)
     fetch(URL, { method: "POST", body, headers: { "Content-type": "application/json; charset=UTF-8" } }).catch(error)
 }
 
