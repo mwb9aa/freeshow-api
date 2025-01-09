@@ -27,10 +27,19 @@
                 API.webSocket(action, data)
             }
 
+            const actions = API.actions
+
+            // custom test actions
+            actions.get_shows = null
+            actions.get_show = "{id: string}"
+            actions.get_projects = null
+            actions.get_project = "{id: string}"
+
+            console.log("ACTIONS:", actions)
+
             // generate buttons
-            console.log("ACTIONS:", API.actions)
             const parent = document.querySelector(".buttons")
-            Object.entries(API.actions).forEach(([action, value]) => {
+            Object.entries(actions).forEach(([action, value]) => {
                 let button = document.createElement("button")
                 button.innerText = action
                 if (value) button.style.backgroundColor = "red"
